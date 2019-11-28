@@ -3,7 +3,6 @@ import{ RecommendWrapper, RecommendItem } from '../style'
 import { connect } from 'react-redux';
 import banner1 from '../../../statics/banner-1.png';
 import banner2 from '../../../statics/banner-2.png';
-import banner3 from '../../../statics/banner-2.png';
 
 class Recommend extends Component {
     render() {

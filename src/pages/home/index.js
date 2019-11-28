@@ -33,7 +33,10 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        this.props.changeHomeData();
+        this.props.getArticleList();
+        this.props.getTopicList();
+        this.props.getWriterList(); //获取推荐作者列表
+       // this.props.changeHomeData();
         this.bindEvent();
     }
 
@@ -55,12 +58,21 @@ const mapDispatch = (dispatch)=>({
     changeHomeData() {
         dispatch(actionCreators.getHomeInfo());
     },
+    getArticleList() {
+        dispatch(actionCreators.getArticleList())
+    },
+    getTopicList() {
+        dispatch(actionCreators.getTopicList())
+    },
+    getWriterList() {
+        dispatch(actionCreators.getWriterList())
+    },
     changeScrollTopShow(e) {
-       if(document.documentElement.scrollTop > 400){
-         dispatch(actionCreators.toggleTopShow(true));
-       }else{
-         dispatch(actionCreators.toggleTopShow(false));
-       }
+        if(document.documentElement.scrollTop > 400){
+            dispatch(actionCreators.toggleTopShow(true));
+        }else{
+            dispatch(actionCreators.toggleTopShow(false));
+        }
     }
 });
 

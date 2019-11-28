@@ -13,10 +13,10 @@ class Writer extends Component {
                 if(item){
                     curList.push(
                         <WriterItem key={item.id}>
-                            <img alt="" className="pic" src={item.imgUrl}/>
+                            <img alt="" className="pic" src={item.avator}/>
                             <div className="writerItemRight">
                                 <p style={{overflow: 'hidden'}}>
-                                    <span className="authorName">{item.authorName}</span>
+                                    <span className="authorName">{item.name}</span>
                                     <span className="follow">+关注</span>
                                 </p>
                                 <p className="statistics">写了32k字, 23喜欢</p>

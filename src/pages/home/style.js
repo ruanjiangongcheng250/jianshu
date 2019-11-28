@@ -248,3 +248,25 @@ export const BigImg = styled.div`
     border-radius: 6px;
     box-shadow: 0 5px 10px rgba(0,0,0,.2);
 `;
+
+
+export const BaseLine = styled.div`
+    text-align: center;
+    color: #999;
+    margin: 20px;
+    span {
+        position: relative;
+        &:before {
+            content: '......';
+            top: -1px;
+            position: absolute;
+            left: -30px;
+        }
+        &:after {
+            content: '......';
+            top: -1px;
+            position: absolute;
+            right: -30px;
+        }
+    }
+`;

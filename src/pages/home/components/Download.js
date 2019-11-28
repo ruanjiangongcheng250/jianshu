@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { DownloadWrapper, DownloadInfo, DownloadTitle, DownloadDesc, BigImg } from '../style';
-
+import wechatImg from '../../../statics/wechat.png'
 class Download extends Component {
     constructor(props) {
         super(props);
@@ -13,7 +13,7 @@ class Download extends Component {
 
     showBigImg() {
         if(this.state.isShowBigImg){
-            return <BigImg><img alt="" src="http://umalltest.yonyoucloud.com/public/images/index/pic-img02.png" /></BigImg>
+            return <BigImg><img alt="" src={wechatImg} /></BigImg>
         }else{
             return null;
         }
@@ -34,7 +34,7 @@ class Download extends Component {
     render() {
         return (
             <DownloadWrapper onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
-                <img className="smallImg" alt="" src="http://umalltest.yonyoucloud.com/public/images/index/pic-img02.png" />
+                <img className="smallImg" alt="" src={wechatImg} />
                 <DownloadInfo>
                     <DownloadTitle>
                         下载简书手机App
