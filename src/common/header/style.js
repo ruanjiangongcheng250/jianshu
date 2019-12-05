@@ -60,13 +60,13 @@ export const NavSearch = styled.input.attrs({
     box-sizing: border-box;
     background: #eee;
     font-size: 14px;
-    margin-left: 20px;
     color: #666;
     &::placeholder {
         color: #999
     }
     &.focused {
         width: 240px;
+        outline:none;
     }
     &.slide-enter {
         transition: all .2s ease-out
@@ -118,9 +118,11 @@ export const SearchWraper = styled.div`
         border-radius: 15px;
         line-height: 30px;
         text-align: center;
+        cursor: pointer;
         &.focused {
             background: #777;
             color: white;
+            outline:none;
         }
     }
 `;

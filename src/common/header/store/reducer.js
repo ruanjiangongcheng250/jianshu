@@ -5,7 +5,8 @@ const defaultState = fromJS({
     list: [],
     mouseIn: false,
     page: 1,
-    totalPage: 1
+    totalPage: 1,
+    keyword: ''
 });
 
 export default  (state = defaultState, action)=>{
@@ -28,6 +29,8 @@ export default  (state = defaultState, action)=>{
             }else{
                 return state.set('page', 1)
             }
+        case constants.SEARCH_KEYWORD:
+            return state.set('keyword', action.keyword)
         default:
             return state;
     }

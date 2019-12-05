@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from './store'; 
 import { actionCreators as loginActionCreators } from '../../pages/login/store'; 
 import { Link } from 'react-router-dom';
+import { message } from 'antd';
 import { 
     HeaderWraper, 
     Logo, 
@@ -21,14 +22,16 @@ import {
 } from './style';
 class Header extends Component{
     render (){
-        const { focused, handleInputBlur, handleInputFocus, list, login, loginOut } = this.props;
+        const { focused, handleInputBlur, handleInputFocus, list, login, loginOut, handleSaveKeyWord } = this.props;
         return (
             <HeaderWraper>
             <Link to="/">
                 <Logo />
             </Link>
             <Nav>
-                <NavItem className="left active">首页</NavItem>
+                <Link to="/">
+                    <NavItem className="left active">首页</NavItem>
+                </Link>
                 <NavItem className="left">下载App</NavItem>
                 {login ? <NavItem onClick={loginOut} className="right">退出</NavItem> : <Link to="/login"><NavItem className="right">登录</NavItem></Link>}
                 <NavItem className="right">
@@ -41,12 +44,13 @@ class Header extends Component{
                         classNames="slide"
                     >
                     <NavSearch 
-                        className={focused ? 'focused' : ''} 
+                        className={focused ? 'searchInput focused' : 'searchInput'} 
                         onFocus={()=>{handleInputFocus(list)}}
                         onBlur ={handleInputBlur}
+                        onKeyDown={(e)=>handleSaveKeyWord(this, null, e)}
                     />
                     </CSSTransition>
-                    <i className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe60b;</i>
+                    <i onMouseDown={()=>handleSaveKeyWord(this)} className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe60b;</i>
                     {this.getListArea()}
                 </SearchWraper>
             </Nav>
@@ -62,14 +66,14 @@ class Header extends Component{
         </HeaderWraper>
         )
     }
-     getListArea (){
-        const { focused, list, page, mouseIn, handleMouseEnter, handleMouseLeave, handleChangePage } = this.props;
+    getListArea (){
+        const { focused, list, page, mouseIn, handleMouseEnter, handleMouseLeave, handleChangePage, handleSaveKeyWord } = this.props;
         const pageList = [];
         if(list.length){
             for(let i = (page-1)*10; i < page * 10; i++){
                 if(list[i]){
                     pageList.push(
-                        <SerachInfoItem key={list[i]}>{list[i]}</SerachInfoItem>
+                        <SerachInfoItem onClick={()=>handleSaveKeyWord(this, list[i])} key={list[i]}>{list[i]}</SerachInfoItem>
                     );
                 }
             }
@@ -94,13 +98,31 @@ class Header extends Component{
     }
 }
 
+const SaveKeyWordToLocal = function(value){
+    const keyWordList = localStorage.getItem('key_word_list');
+    if(!keyWordList){
+        localStorage.setItem('key_word_list', value);
+    }else{
+        const arr = keyWordList.split(';')
+        if(!arr.includes(value)){
+            arr.unshift(value);
+        }
+        if(arr.length > 10){
+            arr.pop()
+        }
+        const str = arr.join(';');
+        localStorage.setItem('key_word_list', str)
+    }
+
+}
+
 const mapStateToProps = (state)=>({
     focused: state.getIn(['header', 'focused']),
     list: state.getIn(['header', 'list']),
     page: state.getIn(['header', 'page']),
     mouseIn: state.getIn(['header', 'mouseIn']),
-    login: state.getIn(["login", "login"])
-    //focused: state.get('header').get('focused')
+    login: state.getIn(["login", "login"]),
+    keyword: state.getIn(["header", "keyword"])
 })
 
 const mapDispatchToProps = (dispatch)=>({
@@ -108,7 +130,7 @@ const mapDispatchToProps = (dispatch)=>({
         (list.size === 0) && dispatch(actionCreators.getList());
         dispatch(actionCreators.searchFocus());
     },
-    handleInputBlur() {
+    handleInputBlur(e) {
         dispatch(actionCreators.searchBlur());
     },
     handleMouseEnter() {
@@ -129,6 +151,23 @@ const mapDispatchToProps = (dispatch)=>({
     },
     loginOut() {
         dispatch(loginActionCreators.loginOut());
+    },
+    handleSaveKeyWord(context, keyword, event) {
+        if(event && event.keyCode !== 13){
+            return;
+        }
+        keyword = keyword || document.getElementsByClassName('searchInput')[0].value;
+        if(!keyword || !keyword.trim()){
+            message.warn('请输入搜索关键字');
+            return;
+        }
+        //将搜索结果放到本地的缓存中
+        SaveKeyWordToLocal(keyword)
+        document.getElementsByClassName('searchInput')[0].blur()
+        document.getElementsByClassName('searchInput')[0].value = '';
+        dispatch(actionCreators.saveKeyWord(keyword));
+        dispatch(actionCreators.mouseLeave());
+        context.props.history.push('/search');
     }
 })
 

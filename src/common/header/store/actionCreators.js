@@ -1,7 +1,7 @@
 
 import * as constants from './constants';
 import axios from 'axios';
-import { fromJs } from 'immutable';
+//import { fromJs } from 'immutable';
 
 const changeList = (data)=>({
     type: constants.CHANGE_LIST,
@@ -28,6 +28,11 @@ export const mouseLeave = ()=>({
 
 export const changePage = ()=>({
     type: constants.CHANGE_PAGE
+});
+
+export const saveKeyWord = (keyword)=>({
+    type: constants.SEARCH_KEYWORD,
+    keyword
 });
 
 export const getList = ()=>(

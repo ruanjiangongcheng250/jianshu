@@ -18,7 +18,7 @@ class Home extends Component {
         return (
             <HomeWraper>
                 <HomeLeft>
-                    <img alt="" className="nanner-img" src="//upload.jianshu.io/admin_banners/web_images/4516/cd9298634ca88ca71fc12752acf47917967a5d31.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540" />
+                    <img alt="" className="banner-img" src="//upload.jianshu.io/admin_banners/web_images/4516/cd9298634ca88ca71fc12752acf47917967a5d31.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540" />
                     <Topic />
                     <List />
                 </HomeLeft>
@@ -36,7 +36,6 @@ class Home extends Component {
         this.props.getArticleList();
         this.props.getTopicList();
         this.props.getWriterList(); //获取推荐作者列表
-       // this.props.changeHomeData();
         this.bindEvent();
     }
 

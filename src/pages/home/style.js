@@ -12,7 +12,7 @@ export const HomeLeft = styled.div`
     padding-top: 30px;
     width: 625px;
     float: left;
-    .nanner-img {
+    .banner-img {
         width: 625px;
         height: 270px;
     }
@@ -258,13 +258,13 @@ export const BaseLine = styled.div`
         position: relative;
         &:before {
             content: '......';
-            top: -1px;
+            top: -6px;
             position: absolute;
             left: -30px;
         }
         &:after {
             content: '......';
-            top: -1px;
+            top: -6px;
             position: absolute;
             right: -30px;
         }
